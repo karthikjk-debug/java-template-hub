@@ -1,39 +1,83 @@
 import streamlit as st
 
-# Force the sidebar to be permanently visible
+# Forces the sidebar to stay open on load
 st.set_page_config(
     page_title="Java Template Hub", 
     page_icon="☕", 
     initial_sidebar_state="expanded"
 )
 
-# Template Library
+# Your expanded list of Java topics
 templates = {
-    "Scanner: 1 Variable": """import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int a = sc.nextInt();\n    }\n}""",
-    "Scanner: 2 Variables": """import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int a = sc.nextInt();\n        int b = sc.nextInt();\n    }\n}""",
-    "If Statement": "if (condition) {\n    // code\n}",
-    "If-Else": "if (condition) {\n    // true\n} else {\n    // false\n}",
-    "While Loop": "int i = 0;\nwhile (i < 10) {\n    System.out.println(i);\n    i++;\n}",
-    "For Loop": "for (int i = 0; i < 10; i++) {\n    System.out.println(i);\n}",
-    "Switch Case": "switch(expression) {\n    case x: break;\n    default: // code\n}"
+    "Scanner: 1 Variable": """import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt();
+    }
+}""",
+    "Scanner: 2 Variables": """import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+    }
+}""",
+    "If Statement": """if (condition) {
+    // code here
+}""",
+    "If-Else": """if (condition) {
+    // true
+} else {
+    // false
+}""",
+    "Else-If Ladder": """if (condition1) {
+    // block 1
+} else if (condition2) {
+    // block 2
+} else {
+    // block 3
+}""",
+    "Switch Case": """switch(expression) {
+    case x:
+        // code
+        break;
+    default:
+        // code
+}""",
+    "For Loop": """for (int i = 0; i < 10; i++) {
+    System.out.println(i);
+}""",
+    "While Loop": """int i = 0;
+while (i < 10) {
+    System.out.println(i);
+    i++;
+}""",
+    "Do-While Loop": """int i = 0;
+do {
+    System.out.println(i);
+    i++;
+} while (i < 10);""",
+    "Break Statement": """break;""",
+    "Continue Statement": """continue;"""
 }
 
 # --- Permanent Sidebar ---
-st.sidebar.title("📚 Template Menu")
-st.sidebar.info("Use UP/DOWN arrows to navigate options below.")
+st.sidebar.title("📚 Java Menu")
+st.sidebar.write("Use ↑/↓ arrows to navigate")
 
-# Using radio buttons for arrow-key navigation
-# Clicking once on an option allows you to use your keyboard arrows to move up/down
+# Using 'radio' allows you to click an option and then use your arrow keys
 selected_template = st.sidebar.radio(
-    "Select Java Boilerplate:",
+    "Go to:",
     list(templates.keys()),
     index=0
 )
 
-# --- Main Display Area ---
+# --- Main Page ---
 st.title(f"🚀 {selected_template}")
 st.code(templates[selected_template], language='java')
 
-# Simple Celebration (No special button styling)
-if st.sidebar.button("Celebrate! 🎈"):
+# A simple, standard button for a quick celebration
+if st.sidebar.button("Celebrate 🎈"):
     st.balloons()
