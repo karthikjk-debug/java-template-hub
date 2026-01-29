@@ -1,123 +1,39 @@
 import streamlit as st
 
-st.set_page_config(page_title="Java Template Hub", page_icon="☕", layout="wide")
+# Force the sidebar to be permanently visible
+st.set_page_config(
+    page_title="Java Template Hub", 
+    page_icon="☕", 
+    initial_sidebar_state="expanded"
+)
 
-# Custom CSS for the Green "Copy" Helper Button
-st.markdown("""
-    <style>
-    div.stButton > button:first-child {
-        background-color: #28a745;
-        color: white;
-        border-radius: 8px;
-        border: none;
-        padding: 12px 30px;
-        font-size: 16px;
-        font-weight: bold;
-        width: 100%;
-    }
-    div.stButton > button:hover {
-        background-color: #218838;
-        border: 1px solid white;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-# --- TEMPLATE LIBRARY (The "End Number" of Options) ---
-# You can add hundreds of these easily
+# Template Library
 templates = {
-    "Scanner: 1 Variable": """import java.util.Scanner;
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int a = sc.nextInt();
-    }
-}""",
-    "Scanner: 2 Variables": """import java.util.Scanner;
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int a = sc.nextInt();
-        int b = sc.nextInt();
-    }
-}""",
-    "If Statement": """if (condition) {
-    // code to be executed if condition is true
-}""",
-    "If-Else": """if (condition) {
-    // code if true
-} else {
-    // code if false
-}""",
-    "Else-If Ladder": """if (condition1) {
-    // block 1
-} else if (condition2) {
-    // block 2
-} else {
-    // block 3
-}""",
-    "Switch Case": """switch(expression) {
-    case x:
-        // code
-        break;
-    case y:
-        // code
-        break;
-    default:
-        // code
-}""",
-    "For Loop": """for (int i = 0; i < 10; i++) {
-    System.out.println(i);
-}""",
-    "While Loop": """int i = 0;
-while (i < 10) {
-    System.out.println(i);
-    i++;
-}""",
-    "Do-While Loop": """int i = 0;
-do {
-    System.out.println(i);
-    i++;
-} while (i < 10);""",
-    "Break Statement": """for (int i = 0; i < 10; i++) {
-    if (i == 5) {
-        break;
-    }
-    System.out.println(i);
-}""",
-    "Continue Statement": """for (int i = 0; i < 10; i++) {
-    if (i == 5) {
-        continue;
-    }
-    System.out.println(i);
-}"""
+    "Scanner: 1 Variable": """import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int a = sc.nextInt();\n    }\n}""",
+    "Scanner: 2 Variables": """import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int a = sc.nextInt();\n        int b = sc.nextInt();\n    }\n}""",
+    "If Statement": "if (condition) {\n    // code\n}",
+    "If-Else": "if (condition) {\n    // true\n} else {\n    // false\n}",
+    "While Loop": "int i = 0;\nwhile (i < 10) {\n    System.out.println(i);\n    i++;\n}",
+    "For Loop": "for (int i = 0; i < 10; i++) {\n    System.out.println(i);\n}",
+    "Switch Case": "switch(expression) {\n    case x: break;\n    default: // code\n}"
 }
 
-# --- SIDEBAR SEARCH & NAVIGATION ---
-st.sidebar.title("🔍 Search & Filter")
-search_query = st.sidebar.text_input("Search (e.g. 'scanner', 'loop')").lower()
+# --- Permanent Sidebar ---
+st.sidebar.title("📚 Template Menu")
+st.sidebar.info("Use UP/DOWN arrows to navigate options below.")
 
-# Filter logic based on search
-filtered_keys = [key for key in templates.keys() if search_query in key.lower()]
+# Using radio buttons for arrow-key navigation
+# Clicking once on an option allows you to use your keyboard arrows to move up/down
+selected_template = st.sidebar.radio(
+    "Select Java Boilerplate:",
+    list(templates.keys()),
+    index=0
+)
 
-if filtered_keys:
-    selected_template = st.sidebar.radio("Select a Template:", filtered_keys)
-    
-    # --- MAIN DISPLAY AREA ---
-    st.title(f"☕ Java Template: {selected_template}")
-    st.write("Copy the code below to save time on your university assignments.")
-    
-    # Code box with built-in copy button
-    st.code(templates[selected_template], language='java')
-    
-    # Custom Green Button
-    if st.button(f"PREPARE {selected_template.upper()}"):
-        st.success("Ready! Use the copy icon in the top-right of the code box.")
-        st.balloons()
-else:
-    st.sidebar.warning("No templates match your search.")
-    st.title("Welcome to the Java Template Hub")
-    st.info("Use the sidebar to search for a Java snippet!")
+# --- Main Display Area ---
+st.title(f"🚀 {selected_template}")
+st.code(templates[selected_template], language='java')
 
-# Footer
-st.sidebar.markdown("---")
-st.sidebar.write("Built for University Productivity")
+# Simple Celebration (No special button styling)
+if st.sidebar.button("Celebrate! 🎈"):
+    st.balloons()
