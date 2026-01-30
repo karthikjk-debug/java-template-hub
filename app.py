@@ -1,10 +1,10 @@
 import streamlit as st
 import pandas as pd
 
-# Force the sidebar to stay open for your university work
-st.set_page_config(page_title="Java Helper", initial_sidebar_state="expanded")
+# 1. Setup: Permanent expanded sidebar
+st.set_page_config(page_title="Java Helper", initial_sidebar_state="expanded", layout="wide")
 
-# --- Use your RAW URL from GitHub here ---
+# 2. Load the Large Database from GitHub
 DB_URL = "https://raw.githubusercontent.com/karthikjk-debug/java-template-hub/main/java_database.csv"
 
 @st.cache_data
@@ -13,45 +13,71 @@ def load_java_data(url):
         df = pd.read_csv(url, quotechar='"', on_bad_lines='skip', engine='python')
         return df.dropna()
     except:
-        return pd.DataFrame({"template_name": ["Error"], "code": ["Check CSV formatting!"]})
+        return pd.DataFrame({"template_name": ["Error"], "code": ["Check CSV!"]})
 
-df = load_java_data(DB_URL)
+df_db = load_java_data(DB_URL)
 
-# --- Permanent Sidebar Navigation ---
-st.sidebar.title("🔍 Search & Filter")
-search_query = st.sidebar.text_input("Search (e.g. 'string', 'array')", "")
+# 3. Your 20 Manual University Templates
+# Just replace the "// Code here" with your actual Java code
+manual_templates = {
+    "Scanner: 1 Variable": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int a = sc.nextInt();\n    }\n}",
+    "Scanner: 2 Variables": "import java.util.Scanner;\n// Code here...",
+    "If-Else Basic": "// Code here...",
+    "Else-If Ladder": "// Code here...",
+    "Switch Case": "// Code here...",
+    "While Loop": "// Code here...",
+    "For Loop": "// Code here...",
+    "Do-While Loop": "// Code here...",
+    "Array Declaration": "// Code here...",
+    "Array Input": "// Code here...",
+    "Method: Void": "// Code here...",
+    "Method: Return": "// Code here...",
+    "String: Length": "// Code here...",
+    "String: Compare": "// Code here...",
+    "Class & Object": "// Code here...",
+    "Constructor": "// Code here...",
+    "Inheritance": "// Code here...",
+    "Try-Catch": "// Code here...",
+    "File Handling": "// Code here...",
+    "Linked List Basic": "// Code here..."
+}
 
-# Filter the list based on search
-if search_query:
-    filtered_df = df[df['template_name'].str.contains(search_query, case=False)]
+# --- SIDEBAR UI ---
+st.sidebar.title("🔍 Search Hub")
+search_query = st.sidebar.text_input("Find any template...", "")
+
+# FOLDER 1: University Templates (The Arrow)
+with st.sidebar.expander("🔽 UNIVERSITY TEMPLATES", expanded=True):
+    selected_manual = st.radio("Choose Program:", list(manual_templates.keys()), key="man_key")
+
+# FOLDER 2: Scraped Database (The Arrow)
+with st.sidebar.expander("🔽 SCRAPED DATABASE", expanded=False):
+    if search_query:
+        filtered_df = df_db[df_db['template_name'].str.contains(search_query, case=False)]
+    else:
+        filtered_df = df_db
+    selected_db = st.radio("Choose Program:", options=filtered_df['template_name'].tolist(), key="db_key")
+
+# --- MAIN PAGE LOGIC ---
+st.title("🚀 Java Template Hub")
+
+# Toggle to choose which source to display
+source = st.radio("Source:", ["University Templates", "Database"], horizontal=True)
+
+if source == "University Templates":
+    current_name = selected_manual
+    current_code = manual_templates[selected_manual]
 else:
-    filtered_df = df
+    current_name = selected_db
+    current_code = df_db[df_db['template_name'] == selected_db]['code'].values[0]
 
-st.sidebar.write("---")
-st.sidebar.title("📚 Java Menu")
+st.subheader(f"Current File: {current_name}")
+st.code(current_code, language='java')
 
-if not filtered_df.empty:
-    selected_name = st.sidebar.radio(
-        "Select a Template (Use ↑/↓ arrows):",
-        options=filtered_df['template_name'].tolist()
-    )
-
-    # --- Main Display Area ---
-    selected_code = filtered_df[filtered_df['template_name'] == selected_name]['code'].values[0]
-    
-    st.title(f"🚀 {selected_name}")
-    st.code(selected_code, language='java')
-
-    # Download Button
-    file_name = f"{selected_name.replace(' ', '_')}.java"
-    st.download_button(
-        label="📥 Download .java File",
-        data=selected_code,
-        file_name=file_name,
-        mime="text/x-java"
-    )
-else:
-    st.sidebar.warning("No templates found for that search.")
-
-if st.sidebar.button("Celebrate 🎈"):
-    st.balloons()
+# Download Button
+st.download_button(
+    label=f"📥 Download {current_name}.java",
+    data=current_code,
+    file_name=f"{current_name.replace(' ', '_')}.java",
+    mime="text/x-java"
+)
