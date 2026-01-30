@@ -1,45 +1,57 @@
 import streamlit as st
 import pandas as pd
 
+# Force the sidebar to stay open for your university work
 st.set_page_config(page_title="Java Helper", initial_sidebar_state="expanded")
 
-# --- Database Connection ---
-DB_URL = "https://raw.githubusercontent.com/karthikjk-debug/java-template-hub/refs/heads/main/java_database.csv"
+# --- Use your RAW URL from GitHub here ---
+DB_URL = "https://raw.githubusercontent.com/karthikjk-debug/java-template-hub/main/java_database.csv"
 
 @st.cache_data
 def load_java_data(url):
     try:
-        # Use sep=None to let pandas figure out the comma formatting automatically
-        data = pd.read_csv(url, quotechar='"', on_bad_lines='skip')
-        return data.dropna()
-    except Exception as e:
-        return pd.DataFrame({"template_name": ["Error"], "code": [f"Connection Error: {e}"]})
+        df = pd.read_csv(url, quotechar='"', on_bad_lines='skip', engine='python')
+        return df.dropna()
+    except:
+        return pd.DataFrame({"template_name": ["Error"], "code": ["Check CSV formatting!"]})
 
 df = load_java_data(DB_URL)
 
-# --- Sidebar ---
+# --- Permanent Sidebar Navigation ---
+st.sidebar.title("🔍 Search & Filter")
+search_query = st.sidebar.text_input("Search (e.g. 'string', 'array')", "")
+
+# Filter the list based on search
+if search_query:
+    filtered_df = df[df['template_name'].str.contains(search_query, case=False)]
+else:
+    filtered_df = df
+
+st.sidebar.write("---")
 st.sidebar.title("📚 Java Menu")
-selected_name = st.sidebar.radio("Choose a Template:", options=df['template_name'].tolist())
 
-# --- Main Screen ---
-st.title(f"🚀 {selected_name}")
+if not filtered_df.empty:
+    selected_name = st.sidebar.radio(
+        "Select a Template (Use ↑/↓ arrows):",
+        options=filtered_df['template_name'].tolist()
+    )
 
-if not df.empty and selected_name != "Error":
-    selected_code = df[df['template_name'] == selected_name]['code'].values[0]
+    # --- Main Display Area ---
+    selected_code = filtered_df[filtered_df['template_name'] == selected_name]['code'].values[0]
     
-    # 1. Display the code
+    st.title(f"🚀 {selected_name}")
     st.code(selected_code, language='java')
-    
-    # 2. Add the Download Button
-    # We create a filename by removing spaces from the template name
+
+    # Download Button
     file_name = f"{selected_name.replace(' ', '_')}.java"
-    
     st.download_button(
         label="📥 Download .java File",
         data=selected_code,
         file_name=file_name,
         mime="text/x-java"
     )
+else:
+    st.sidebar.warning("No templates found for that search.")
 
 if st.sidebar.button("Celebrate 🎈"):
     st.balloons()
