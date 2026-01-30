@@ -1,4 +1,4 @@
-java_database
+
 template_name,code
 Java Program to Convert Char to Int,"// Java Program to Convert Char to Int
 // Using ASCII value
@@ -615,6 +615,7 @@ class GFG {
                            + "" MB"");
     }
 }"
+
 Java Program to Check Armstrong Number between Two Integers,"// JAVA program to find Armstrong
 // numbers between two integers
 import java.io.*;
