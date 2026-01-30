@@ -1,10 +1,10 @@
 import streamlit as st
 import pandas as pd
 
-# 1. Setup: Permanent expanded sidebar
-st.set_page_config(page_title="Java Helper", initial_sidebar_state="expanded", layout="wide")
+# 1. Setup
+st.set_page_config(page_title="Java Template Hub", initial_sidebar_state="expanded", layout="wide")
 
-# 2. Load the Large Database from GitHub
+# 2. Load Scraped Database
 DB_URL = "https://raw.githubusercontent.com/karthikjk-debug/java-template-hub/main/java_database.csv"
 
 @st.cache_data
@@ -17,67 +17,60 @@ def load_java_data(url):
 
 df_db = load_java_data(DB_URL)
 
-# 3. Your 20 Manual University Templates
-# Just replace the "// Code here" with your actual Java code
+# 3. All 20 Manual University Templates
 manual_templates = {
-    "Scanner: 1 Variable": "import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int a = sc.nextInt();\n    }\n}",
-    "Scanner: 2 Variables": "import java.util.Scanner;\n// Code here...",
-    "If-Else Basic": "// Code here...",
-    "Else-If Ladder": "// Code here...",
-    "Switch Case": "// Code here...",
-    "While Loop": "// Code here...",
-    "For Loop": "// Code here...",
-    "Do-While Loop": "// Code here...",
-    "Array Declaration": "// Code here...",
-    "Array Input": "// Code here...",
-    "Method: Void": "// Code here...",
-    "Method: Return": "// Code here...",
-    "String: Length": "// Code here...",
-    "String: Compare": "// Code here...",
-    "Class & Object": "// Code here...",
-    "Constructor": "// Code here...",
-    "Inheritance": "// Code here...",
-    "Try-Catch": "// Code here...",
-    "File Handling": "// Code here...",
-    "Linked List Basic": "// Code here..."
+    "Scanner: 1 Variable": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        System.out.print(\"Enter value: \");\n        int a = sc.nextInt();\n        System.out.println(\"Value: \" + a);\n    }\n}",
+    "Scanner: 2 Variables": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int a = sc.nextInt();\n        int b = sc.nextInt();\n        System.out.println(\"Sum: \" + (a + b));\n    }\n}",
+    "If-Else Basic": "if (num > 0) {\n    System.out.println(\"Positive\");\n} else {\n    System.out.println(\"Negative\");\n}",
+    "Else-If Ladder": "if (marks >= 90) System.out.println(\"A\");\nelse if (marks >= 75) System.out.println(\"B\");\nelse System.out.println(\"C\");",
+    "Switch Case": "switch(day) {\n    case 1: System.out.println(\"Monday\"); break;\n    default: System.out.println(\"Other\");\n}",
+    "While Loop": "int i = 1;\nwhile(i <= 10) {\n    System.out.println(i);\n    i++;\n}",
+    "For Loop": "for(int i=0; i<10; i++) {\n    System.out.println(i);\n}",
+    "Do-While Loop": "int i = 0;\ndo {\n    System.out.println(i);\n    i++;\n} while(i < 5);",
+    "Array: Declaration": "int[] arr = new int[5];\narr[0] = 10;",
+    "Array: Input Loop": "for(int i=0; i<arr.length; i++) {\n    arr[i] = sc.nextInt();\n}",
+    "Method: Void": "public static void sayHello() {\n    System.out.println(\"Hello!\");\n}",
+    "Method: Return": "public static int add(int a, int b) {\n    return a + b;\n}",
+    "String: Compare": "if(str1.equals(str2)) {\n    System.out.println(\"Equal\");\n}",
+    "String: Reverse": "StringBuilder sb = new StringBuilder(str);\nSystem.out.println(sb.reverse().toString());",
+    "Class & Object": "class Student {\n    String name;\n}\nStudent s1 = new Student();",
+    "Constructor": "public Student(String n) {\n    this.name = n;\n}",
+    "Inheritance": "class Animal { }\nclass Dog extends Animal { }",
+    "Try-Catch": "try {\n    int result = 10 / 0;\n} catch(ArithmeticException e) {\n    System.out.println(e);\n}",
+    "Thread: Basic": "class MyThread extends Thread {\n    public void run() { }\n}",
+    "Math: Functions": "Math.sqrt(16);\nMath.pow(2, 3);\nMath.abs(-5);"
 }
 
-# --- SIDEBAR UI ---
+# --- SIDEBAR ---
 st.sidebar.title("🔍 Search Hub")
-search_query = st.sidebar.text_input("Find any template...", "")
+search_query = st.sidebar.text_input("Filter database...", "")
 
-# FOLDER 1: University Templates (The Arrow)
 with st.sidebar.expander("🔽 UNIVERSITY TEMPLATES", expanded=True):
-    selected_manual = st.radio("Choose Program:", list(manual_templates.keys()), key="man_key")
+    selected_manual = st.radio("Quick Access:", list(manual_templates.keys()), key="man")
 
-# FOLDER 2: Scraped Database (The Arrow)
 with st.sidebar.expander("🔽 SCRAPED DATABASE", expanded=False):
     if search_query:
-        filtered_df = df_db[df_db['template_name'].str.contains(search_query, case=False)]
+        filtered_db = df_db[df_db['template_name'].str.contains(search_query, case=False)]
     else:
         filtered_df = df_db
-    selected_db = st.radio("Choose Program:", options=filtered_df['template_name'].tolist(), key="db_key")
+    selected_db = st.radio("Full Database:", options=filtered_df['template_name'].tolist(), key="db")
 
-# --- MAIN PAGE LOGIC ---
-st.title("🚀 Java Template Hub")
-
-# Toggle to choose which source to display
-source = st.radio("Source:", ["University Templates", "Database"], horizontal=True)
+# --- MAIN DISPLAY ---
+st.title("🚀 Java Code Hub")
+source = st.radio("View Source:", ["University Templates", "Database"], horizontal=True)
 
 if source == "University Templates":
-    current_name = selected_manual
-    current_code = manual_templates[selected_manual]
+    disp_name, disp_code = selected_manual, manual_templates[selected_manual]
 else:
-    current_name = selected_db
-    current_code = df_db[df_db['template_name'] == selected_db]['code'].values[0]
+    disp_name = selected_db
+    disp_code = df_db[df_db['template_name'] == selected_db]['code'].values[0]
 
-st.subheader(f"Current File: {current_name}")
-st.code(current_code, language='java')
+st.subheader(f"Current: {disp_name}")
+st.code(disp_code, language='java')
 
-# Download Button
 st.download_button(
-    label=f"📥 Download {current_name}.java",
-    data=current_code,
-    file_name=f"{current_name.replace(' ', '_')}.java",
+    label=f"📥 Download {disp_name}.java",
+    data=disp_code,
+    file_name=f"{disp_name.replace(' ', '_')}.java",
     mime="text/x-java"
 )
