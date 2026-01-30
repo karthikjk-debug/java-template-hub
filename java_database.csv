@@ -1,0 +1,665 @@
+java_database
+template_name,code
+Java Program to Convert Char to Int,"// Java Program to Convert Char to Int
+// Using ASCII value
+class Geeks 
+{
+    // Main driver method
+    public static void main(String[] args)
+    {
+        // Initializing a character
+        char num = '3';
+
+        // Printing the character value
+        System.out.println(""char value: "" + num);
+
+
+        // Converting character to its integer value
+        int n = num - '0';
+        
+
+        // Printing the integer value
+        System.out.println(""int value: "" + n);
+    }
+}"
+Java Program to Reverse a String using Stack,"// Java Program to Reverse a String using Stack
+
+import java.io.*;
+import java.util.*;
+
+class GFG {
+
+    public static String ReverseString(String str)
+    {
+        char[] reverseString = new char[str.length()];
+        // Declare a stack of type Character
+        Stack<Character> stack = new Stack<Character>();
+
+        // Traverse the String and push the character one by
+        // one into the Stack
+        for (int i = 0; i < str.length(); i++) {
+            // push the character into the Stack
+            stack.push(str.charAt(i));
+        }
+
+        // Now Pop the Characters from the stack until it
+        // becomes empty
+
+        int i = 0;
+        while (!stack.isEmpty()) { // popping element until
+                                   // stack become empty
+            // get the character from the top of the stack
+            reverseString[i++] = stack.pop();
+        }
+        // return string object
+        return new String(reverseString);
+    }
+
+    // Driver code
+    public static void main(String[] args)
+    {
+        String str1 = ""GeeksForGeeks"";
+      
+        // call the function
+        System.out.println(str1 + "" <- Reverse -> ""
+                           + ReverseString(str1));
+      
+        String str2 = ""Hello World"";
+      
+        // call the function
+        System.out.println(str2 + "" <- Reverse -> ""
+                           + ReverseString(str2));
+    }
+}"
+Java Program to Swap Two Numbers,"public class GFG{
+    public static void main(String[] args){
+        
+        int m = 9, n = 5;
+        System.out.println(""Before swapping: m = "" + m + "", n = "" + n);
+
+        int temp = m;
+        m = n;
+        n = temp;
+
+        System.out.println(""After swapping: m = "" + m + "", n = "" + n);
+    }
+}"
+Java Program to Interchange Elements of First and Last in a Matrix Across Columns,"// Java Program to Interchange Elements of the
+// First and Last Column in a Matrix
+
+// Importing input output classes
+import java.io.*;
+
+class GFG {
+
+    // Declare static variable and initialize to
+    // order of the matrix
+    static int N = 4;
+
+    // Method 1
+    // To swap first and last column in a matrix
+    static void Swap_First_Last(int mat[][])
+    {
+        int cls = N;
+
+        // Interchanging of elements between the
+        // first and last columns
+        for (int j = 0; j < N; j++) {
+            int temp = mat[j][0];
+            mat[j][0] = mat[j][N - 1];
+            mat[j][N - 1] = temp;
+        }
+    }
+
+    // Method 2
+    // Main driver method
+    public static void main(String[] args)
+    {
+        // Creating 2D integer element matrix
+        // Custom input matrix
+        int mat[][]
+            = { { 1, 2, 3, 4 }, { 5, 6, 7, 8 }, { 9, 10, 11, 12 }, { 13, 14, 15, 16}};
+
+
+        // Now, calling the (Method1) to interchange
+        // first and last columns in above matrix
+        Swap_First_Last(mat);
+
+        // Now simply print the updated matrix
+        // Swapped matrix using nested for loops
+
+        // Outer loop for rows
+        for (int j = 0; j < N; j++) {
+
+            // Inner loop for columns
+            for (int k = 0; k < N; k++)
+
+                // Print the swapped matrix
+                System.out.print(mat[j][k] + "" "");
+
+            // Operations over a row is computed so new line
+            System.out.println();
+        }
+    }
+}"
+Java Program for Hexadecimal to Decimal Conversion,"// Java program to convert Hexadecimal 
+// to Decimal Number
+
+// Importing input output classes
+import java.io.*;
+
+// Main class
+class Geeks
+{
+
+    // Method
+    // To convert hexadecimal to decimal
+    static int hexaToDec(String n)
+    {
+        // Storing the length of the
+        int l = n.length();
+
+        // Initializing base value to 1, i.e 16^0
+        int base = 1;
+
+        // Initially declaring and initializing
+        // decimal value to zero
+        int dec_val = 0;
+
+        // Extracting characters as
+        // digits from last character
+
+        for (int i = l - 1; i >= 0; i--) {
+
+            // Condition check
+            // Case 1
+            // If character lies in '0'-'9', converting
+            // it to integral 0-9 by subtracting 48 from
+            // ASCII value
+            if (n.charAt(i) >= '0'
+                && n.charAt(i) <= '9') {
+                dec_val += (n.charAt(i) - 48) * base;
+
+                // Incrementing base by power
+                base = base * 16;
+            }
+
+            // Case 2
+            // if case 1 is bypassed
+
+            // Now, if character lies in 'A'-'F' ,
+            // converting it to integral 10 - 15 by
+            // subtracting 55 from ASCII value
+            else if (n.charAt(i) >= 'A'
+                     && n.charAt(i) <= 'F') {
+                dec_val += (n.charAt(i) - 55) * base;
+
+                // Incrementing base by power
+                base = base * 16;
+            }
+        }
+
+        // Returning the decimal value
+        return dec_val;
+    }
+
+    // Method 2
+    // Main driver method
+    public static void main(String[] args)
+    {
+        // Custom input hexadecimal number to be
+        // converted into decimal number
+        String n = ""1A"";
+
+        // Calling the above method to convert and
+        // alongside printing the hexadecimal number
+        System.out.println(hexaToDec(n));
+    }
+}"
+Java Program to Get a Character from a String,"// Java program to get a specific character
+// from a given String at a specific index
+
+class GFG{
+
+    // Driver code
+    public static void main(String[] args)
+    {
+
+        // Get the String
+        String str = ""GeeksForGeeks"";
+
+        // Get the index
+        int index = 5;
+
+        // Get the specific character
+        char ch = str.charAt(index);
+
+        System.out.println(""Character from "" + str
+                           + "" at index "" + index
+                           + "" is "" + ch);
+    }
+}"
+Java Program to Print Right Triangle Star Pattern,"public class RightTriangleStarPattern {
+    public static void main(String[] args) {
+        int rows = 5; 
+        
+        for (int i = 1; i <= rows; i++) {       // Outer loop for rows
+            for (int j = 1; j <= i; j++) {     // Inner loop for stars
+                System.out.print(""* "");
+            }
+            System.out.println();               // Move to next line
+        }
+    }
+}"
+Java Program to Create a New File,"import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
+
+public class CreateUsingFile {
+  
+    // Function To Make New File
+    public void newFile()
+    {
+        String strPath , strName ;
+
+        try {
+
+            // Creating BufferedReadered object
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            System.out.print(""Enter the file name : "");
+
+            // Reading File name
+            strName = br.readLine();
+            System.out.print(""Enter the file path : "");
+
+            // Reading File Path
+            strPath = br.readLine();
+
+            // Creating File Object
+            File file1 = new File(strPath + ""\\"" + strName + "".txt"");
+
+            // Method createNewFile() method creates blank file.
+            file1.createNewFile();
+        }
+
+        catch (Exception ex1) {
+            System.out.print(""Failed to create a file."");
+        }
+    }
+  
+    public static void main(String args[]){
+      
+        // Creating New File via function
+        CreateUsingFile gfg = new CreateUsingFile();
+        gfg.newFile();
+    }
+}"
+Java Program to Make a File Read-Only,"// Java program to make the file as read only
+
+import java.io.File;
+
+public class GFG {
+  
+    public static void main(String[] args)
+    {
+        // flag variable which contains the boolean
+        // value returned by setReadOnly() function
+        boolean flag;
+      
+        try {
+          
+            File file = new File(""/home/mayur/GFG.java"");
+          
+            // creates a new file
+            file.createNewFile();
+          
+            // flag the file to be read-only
+            flag = file.setReadOnly();
+          
+            System.out.println(""Is File is read-only ? : ""
+                               + flag);
+          
+            // checking whether Is file  writable
+            flag = file.canWrite();
+            System.out.println(""Is File is writable ? : ""
+                               + flag);
+        }
+      
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}"
+Java Program to Convert String to Object,"// Java Program to convert string to an object
+import java.io.*;
+import java.util.*;
+ 
+class GFG {
+    public static void main(String[] args)
+    {
+        // string
+        String s = ""GeeksForGeeks"";
+      
+        // assigning string to an object
+        Object object = s;
+      
+        // to check the data-typeof the object 
+        // to confirm that s has been stored in object
+       System.out.println(""Datatype of the variable in object is : ""
+                          +object.getClass().getName());
+      
+       System.out.println(""object is : ""+object);
+    }
+}"
+Java Program to Find the Perimeter of a Rectangle,"class GFG {
+    static int calculatePerimeter(int length, int breadth) {
+        return 2 * (length + breadth);
+    }
+    public static void main(String[] args) {
+
+        int length = 10;
+        int breadth = 20;
+
+        int perimeter = calculatePerimeter(length, breadth);
+        System.out.println(""The perimeter of the rectangle is: "" + perimeter);
+    }
+}"
+Java Program to Add Two Binary Strings,"class GFG {
+
+    static String addBinary(String x, String y) {
+
+        int num1 = Integer.parseInt(x, 2);
+        int num2 = Integer.parseInt(y, 2);
+
+        int sum = num1 + num2;
+        return Integer.toBinaryString(sum);
+    }
+    public static void main(String[] args) {
+        String x = ""011011"";
+        String y = ""1010111"";
+        System.out.println(addBinary(x, y));
+    }
+}"
+Java Program to Sort the Elements of an Array in Ascending Order,"// Java Program to sort the elements of an array
+// in Ascending Order using Arrays.sort() method
+import java.util.Arrays;
+
+public class GFG {
+  	public static void main(String[] args) {
+      
+        int[] arr = new int[] { -2, 0, 1, 3, -1, 2 };
+
+        // use Arrays.sort() method to sort array
+        // elements in ascending order
+        Arrays.sort(arr);
+
+        System.out.println(Arrays.toString(arr));
+    }
+}"
+Java Program to Find Common Elements Between Two Arrays,"// Java Program to find common elements
+// in two Arrays
+// Using iterative method
+
+import java.io.*;
+import java.util.*;
+
+// Driver Class
+class GFG {
+  	
+  	// Function to Find Common Elements 
+    private static void FindCommonElement(String[] arr1,String[] arr2)
+    {
+        Set<String> set = new HashSet<>();
+        for (int i = 0; i < arr1.length; i++) {
+            for (int j = 0; j < arr2.length; j++) {
+                if (arr1[i].equals(arr2[j])) {
+
+                    // add common elements
+                    set.add(arr1[i]);
+                    break;
+                }
+            }
+        }
+      
+      	// Common Elements in Arrays
+      	System.out.println(set.toString());
+    }
+
+    // Main Method
+    public static void main(String[] args)
+    {
+
+        // Create Array 1
+        String[] arr1 = { ""Article"", ""in"", ""Geeks"", ""for"", ""Geeks"" };
+
+        // Create Array 2
+        String[] arr2 = { ""Geeks"", ""for"", ""Geeks"" };
+
+        // Find the Common Elements
+        FindCommonElement(arr1, arr2);
+    }
+}"
+Java Program to Add two Matrices,"// Java program to add two matrices
+public class Geeks {
+
+    public static void main(String[] args) 
+    {
+        // Input matrices
+        int A[][] = { { 1, 2 }, { 3, 4 } };
+        int B[][] = { { 1, 1 }, { 1, 1 } };
+
+        // Dimensions of the matrix
+        int rows = A.length;
+        int cols = A[0].length;
+
+        // Resultant matrix to store the sum
+        int sum[][] = new int[rows][cols];
+
+        // Adding two matrices
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                sum[i][j] = A[i][j] + B[i][j];
+            }
+        }
+
+        // Printing the resultant matrix
+        System.out.println(""Resultant Matrix:"");
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+              
+                // Print elements on the same line
+                System.out.print(sum[i][j] + "" "");
+            }
+            // Move to the next line after printing each row
+            System.out.println();
+        }
+    }
+}"
+Java Program to Find Largest Element in an Array,"// Java Program to find the largest element in 
+// array using iterative approach
+class Geeks 
+{
+    // Array declared
+    static int arr[] = {20, 10, 20, 4, 100}; 
+    
+    // Method to find maximum in arr[] 
+    static int largest() 
+    {       
+        // Initialize maximum element 
+        int max = arr[0]; 
+        
+      	// Traversing and comparing max element
+        for (int i = 1; i < arr.length; i++)
+        
+         // If current element is greater than max
+            if (arr[i] > max) 
+            
+                // Then update max element
+                max = arr[i]; 
+        
+        return max; 
+    } 
+    
+    public static void main(String[] args) 
+    {    
+      
+        System.out.println(largest()); 
+    } 
+}"
+Java Program to List all Files in a Directory and Nested Sub-Directories,"// Java program to print all files
+// in a folder(and sub-folders)
+
+import java.io.File;
+
+public class GFG {
+    static void RecursivePrint(File[] arr, int index, int level)
+    {
+        // terminate condition
+        if (index == arr.length)
+            return;
+
+        // tabs for internal levels
+        for (int i = 0; i < level; i++)
+            System.out.print(""\t"");
+
+        // for files
+        if (arr[index].isFile())
+            System.out.println(arr[index].getName());
+
+        // for sub-directories
+        else if (arr[index].isDirectory()) {
+            System.out.println(""["" + arr[index].getName()
+                               + ""]"");
+
+            // recursion for sub-directories
+            RecursivePrint(arr[index].listFiles(), 0,
+                           level + 1);
+        }
+
+        // recursion for main directory
+        RecursivePrint(arr, ++index, level);
+    }
+
+    // Driver Method
+    public static void main(String[] args)
+    {
+        // Provide full path for directory(change
+        // accordingly)
+        String maindirpath
+            = ""C:\\Users\\Gaurav Miglani\\Desktop\\Test"";
+
+        // File object
+        File maindir = new File(maindirpath);
+
+        if (maindir.exists() && maindir.isDirectory()) {
+            
+              // array for files and sub-directories
+            // of directory pointed by maindir
+            File arr[] = maindir.listFiles();
+
+            System.out.println(
+                ""**********************************************"");
+            System.out.println(
+                ""Files from main directory : "" + maindir);
+            System.out.println(
+                ""**********************************************"");
+
+            // Calling recursive method
+            RecursivePrint(arr, 0, 0);
+        }
+    }
+}"
+Java Program to Get the Size of a Directory,"// Java program to Get the size of a directory
+
+import java.io.File;
+
+class GFG {
+    private static long getFolderSize(File folder)
+    {
+        long length = 0;
+      
+        // listFiles() is used to list the
+        // contents of the given folder
+        File[] files = folder.listFiles();
+
+        int count = files.length;
+
+        // loop for traversing the directory
+        for (int i = 0; i < count; i++) {
+            if (files[i].isFile()) {
+                length += files[i].length();
+            }
+            else {
+                length += getFolderSize(files[i]);
+            }
+        }
+        return length;
+    }
+
+    // Driver Code
+    public static void main(String[] args)
+    {
+        // Creating an instances of file class
+        File file1 = new File(""/home/mayur/Downloads"");
+
+        long size = getFolderSize(file1);
+        // Size of folder in Bytes
+        System.out.println(""Size of "" + file1 + "" is ""
+                           + size + "" B"");
+        // Size of folder in Kilobytes
+        System.out.println(""Size of "" + file1 + "" is ""
+                           + (double)size / 1024 + "" KB"");
+        // Size of folder in Megabytes
+        System.out.println(""Size of "" + file1 + "" is ""
+                           + (double)size / (1024 * 1024)
+                           + "" MB"");
+    }
+}"
+Java Program to Check Armstrong Number between Two Integers,"// JAVA program to find Armstrong
+// numbers between two integers
+import java.io.*;
+import java.math.*;
+
+class gfg {
+
+    // Function to print Armstrong
+    // Numbers between two integers
+    static void ArmstrongNum(int l, int h)
+    {
+        for (int j = l + 1; j < h; ++j) {
+
+            // Calculating number of digits
+            int y = j;
+            int N = 0;
+            while (y != 0) {
+                y /= 10;
+                ++N;
+            }
+
+            // Calculating the sum of nth
+            // power of all the digits
+            int sum_power = 0;
+            y = j;
+            while (y != 0) {
+                int d = y % 10;
+                sum_power += Math.pow(d, N);
+                y /= 10;
+            }
+
+            // Checking if the current number
+            // i is equal to the sum of nth
+            // power of all the digits
+            if (sum_power == j)
+                System.out.print(j + "" "");
+        }
+    }
+
+    // The Driver code
+    public static void main(String args[])
+    {
+        int n1 = 50;
+        int n2 = 500;
+        ArmstrongNum(n1, n2);
+        System.out.println();
+    }
+}"
