@@ -4,7 +4,7 @@ import pandas as pd
 st.set_page_config(page_title="Java Helper", initial_sidebar_state="expanded")
 
 # --- Database Connection ---
-DB_URL = "https://raw.githubusercontent.com/karthikjk-debug/java-template-hub/main/java_database.csv"
+DB_URL = "https://raw.githubusercontent.com/karthikjk-debug/java-template-hub/refs/heads/main/java_database.csv"
 
 @st.cache_data
 def load_java_data(url):
